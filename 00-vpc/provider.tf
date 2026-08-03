@@ -7,7 +7,8 @@ terraform {
     }
 
     # remote state storage location
-    # Configures terraform to store its architecture blueprint(.tftstate file) in Amazon S3 instead of your local computer. This allows team collaboration
+    # Configures terraform to store its architecture blueprint(.tftstate file) in Amazon S3 instead of your local computer. 
+    # This allows team collaboration
     backend "s3" {
       bucket        = "remote-state-90s-practice-dev" # Name of the S3 bucket where the state file is stored. 
       key           = "roboshop-eks-vpc.tfstate" # The exact folder path and file name inside the bucket. 
