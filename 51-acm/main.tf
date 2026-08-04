@@ -14,7 +14,7 @@ resource "aws_acm_certificate" "roboshop" {
     }
 }
 
-resource "aws_route_53_record" "roboshop" {
+resource "aws_route53_record" "roboshop" {
     for_each = {
         for dvo in aws_acm_certificate.roboshop.domain_validation_options : dvo.domain_name => {
             name    = dvo.resource_record_name 
