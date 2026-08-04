@@ -101,5 +101,5 @@ resource "aws_security_group_rule" "eks_node_vpc" {
   to_port           = 0
   protocol          = "-1" # All traffic
   cidr_blocks = ["10.0.0.0/16"] # VPC CIDR
-  security_group_id = local.eks_control_plane_sg_id
+  security_group_id = local.eks_node_sg_id 
 }
