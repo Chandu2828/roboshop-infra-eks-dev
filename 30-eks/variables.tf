@@ -16,7 +16,7 @@ variable "enable_blue" {
 }
 
 variable "blue_version" {
-    default = "1.36"
+    default = "1.34"
 }
 
 variable "enable_green" {
