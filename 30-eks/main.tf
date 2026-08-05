@@ -90,6 +90,7 @@ module "eks" {
 
             labels = {
                 nodegroup = "green"
+            # This label will go for the node in the cluster
             }
         }
     }
