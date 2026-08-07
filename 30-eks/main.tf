@@ -13,7 +13,8 @@ module "eks" {
         }
         kube-proxy              = {}
         vpc-cni                 = {
-            before_compute = true 
+            before_compute = true
+            enable_network_policy = true
         }
         metrics-server = {}
     }
