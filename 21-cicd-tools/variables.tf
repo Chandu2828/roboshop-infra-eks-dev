@@ -14,9 +14,9 @@ variable "domain_name" {
     default = "vnmurthy.online"
 }
 
-# variable "sonar" {
-#     default = true 
-# }
+variable "sonar" {
+    default = false  
+}
 
 variable "jenkins" {
     default = true 

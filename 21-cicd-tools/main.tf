@@ -53,22 +53,22 @@ resource "aws_instance" "jenkins_agent" {
     )
 }
 
-# resource "aws_instance" "sonarqube" {
-#     count                     = var.sonar ? 1 : 0 
-#     ami                       = local.sonar_ami_id 
-#     instance_type             = "t3.large"
-#     vpc_security_group_ids    = [local.sonar_sg_id]
-#     subnet_id                 = local.public_subnet_id # replace your subnet in default VPC 
-#     key_name                  = "vnmurthy.online"
-#     # need more for terraform
-#     # root_block_device {
-#     #     volume_size = 20 
-#     #     volume_type = "gp3"
-#     # }
-#     tags = merge(
-#         local.common_tags,
-#         {
-#             Name = "${var.project}-${var.environment}-sonar"
-#         }
-#     )
-# }
+resource "aws_instance" "sonarqube" {
+    count                     = var.sonar ? 1 : 0 
+    ami                       = local.sonar_ami_id 
+    instance_type             = "t3.large"
+    vpc_security_group_ids    = [local.sonar_sg_id]
+    subnet_id                 = local.public_subnet_id # replace your subnet in default VPC 
+    key_name                  = "vnmurthy.online"
+    # need more for terraform
+    # root_block_device {
+    #     volume_size = 20 
+    #     volume_type = "gp3"
+    # }
+    tags = merge(
+        local.common_tags,
+        {
+            Name = "${var.project}-${var.environment}-sonar"
+        }
+    )
+}

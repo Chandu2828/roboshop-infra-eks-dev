@@ -38,6 +38,7 @@ resource "aws_security_group_rule" "rabbitmq_bastion"{
     security_group_id = local.rabbitmq_sg_id 
 }
 
+# Frontend ALB
 resource "aws_security_group_rule" "public_alb_https" {
   type              = "ingress"
   from_port         = 443
@@ -100,6 +101,66 @@ resource "aws_security_group_rule" "eks_node_vpc" {
   from_port         = 0
   to_port           = 0
   protocol          = "-1" # All traffic
-  cidr_blocks = ["10.0.0.0/16"] # VPC CIDR
+  cidr_blocks       = ["10.0.0.0/16"] # VPC CIDR
   security_group_id = local.eks_node_sg_id 
 }
+
+# Jenkins 
+resource "aws_security_group_rule" "jenkins_public" {
+  type              = "ingress"
+  from_port         = 8080 
+  to_port           = 8080
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  #["${chomp(data.http.my_public_ip.response_body)}/32"]
+  security_group_id = local.jenkins_sg_id 
+}
+
+resource "aws_security_group_rule" "jenkins_ssh" {
+  type              = "ingress"
+  from_port         = 22 
+  to_port           = 22 
+  protocol          = "tcp"
+  cidr_blocks       = ["${chomp(data.http.my_public_ip.response_body)}/32"]
+  security_group_id = local.jenkins_sg_id 
+}
+
+resource "aws_security_group_rule" "jenkins_agent_ssh" {
+  type              = "ingress"
+  from_port         = 22 
+  to_port           = 22 
+  protocol          = "tcp"
+  cidr_blocks       = ["${chomp(data.http.my_public_ip.response_body)}/32"]
+  security_group_id = local.jenkins_agent_sg_id 
+}
+
+resource "aws_security_group_rule" "jenkins_agent_jenkins" {
+  type              = "ingress"
+  from_port         = 22 
+  to_port           = 22 
+  protocol          = "tcp"
+  source_security_group_id = local.jenkins_sg_id 
+  security_group_id = local.jenkins_agent_sg_id 
+}
+
+resource "aws_security_group_rule" "sonar_web" {
+  type              = "ingress"
+  from_port         = 9000
+  to_port           = 9000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = local.sonar_sg_id 
+}
+
+resource "aws_security_group_rule" "sonar_ssh" {
+  type              = "ingress"
+  from_port         = 22 
+  to_port           = 22 
+  protocol          = "tcp"
+  cidr_blocks       = ["${chomp(data.http.my_public_ip.response_body)}/32"]
+  security_group_id = local.sonar_sg_id 
+}
+
+
+
+
